@@ -1,0 +1,82 @@
+{
+    "insert": {
+        "threads": 25,
+        "responseTime_perc90": 37.6448,
+        "stDeviation": 24.50207,
+        "avg_DocPerSecond": 5556,
+        "avg_MbPerSecond": 111.13964,
+        "perc90_DocPerSecond": 3320,
+        "responseTime_avg": 22.49422,
+        "perc90_MbPerSecond": 66.41023
+    },
+    "find": {
+        "threads": 25,
+        "responseTime_perc90": 27.728,
+        "stDeviation": 21.50176,
+        "avg_DocPerSecond": 5922,
+        "avg_MbPerSecond": 118.4546,
+        "perc90_DocPerSecond": 4508,
+        "responseTime_avg": 21.10513,
+        "perc90_MbPerSecond": 90.16157
+    },
+    "consistent_Find_Insert": {
+        "threads": 25,
+        "responseTime_perc90": 49.3888,
+        "stDeviation": 38.01399,
+        "avg_DocPerSecond": 3396,
+        "avg_MbPerSecond": 67.92825,
+        "perc90_DocPerSecond": 2530,
+        "responseTime_avg": 36.80354,
+        "perc90_MbPerSecond": 50.61876
+    },
+    "insert_SHARDED": {
+        "threads": 25,
+        "responseTime_perc90": 22.4368,
+        "stDeviation": 15.94071,
+        "avg_DocPerSecond": 8147,
+        "avg_MbPerSecond": 162.9542,
+        "perc90_DocPerSecond": 5571,
+        "responseTime_avg": 15.34173,
+        "perc90_MbPerSecond": 111.42409
+    },
+    "find_SHARDED": {
+        "threads": 25,
+        "responseTime_perc90": 25.4768,
+        "stDeviation": 20.9493,
+        "avg_DocPerSecond": 6054,
+        "avg_MbPerSecond": 121.08785,
+        "perc90_DocPerSecond": 4906,
+        "responseTime_avg": 20.64617,
+        "perc90_MbPerSecond": 98.12849
+    },
+    "consistent_Find_Insert_SHARDED": {
+        "threads": 25,
+        "responseTime_perc90": 48.3872,
+        "stDeviation": 41.24388,
+        "avg_DocPerSecond": 3061,
+        "avg_MbPerSecond": 61.23142,
+        "perc90_DocPerSecond": 2583,
+        "responseTime_avg": 40.82871,
+        "perc90_MbPerSecond": 51.66656
+    },
+    "total": {
+        "threads": 25,
+        "responseTime_perc90": 35.17707,
+        "stDeviation": 27.02529,
+        "avg_DocPerSecond": 5356,
+        "avg_MbPerSecond": 107.13266,
+        "perc90_DocPerSecond": 3903,
+        "responseTime_avg": 26.20325,
+        "perc90_MbPerSecond": 78.06828
+    },
+    "meta_data": {
+        "each_test_duration_seconds": 120.0,
+        "environment": "integration",
+        "each_document_size": 20000,
+        "threads_in_each_instance": 5,
+        "instances_count": 5,
+        "mongo_host": "mongodb://10.25.154.104:27017",
+        "documents_in_batch": 5000,
+        "timestamp": "13-12-2018_02:38:06"
+    }
+}
