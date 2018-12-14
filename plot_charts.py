@@ -108,7 +108,7 @@ class CustomPlot:
 
     def first_configure_ax(self):
         for ax, x_l in zip(self.ax, self.x_labels):
-            ax.set_xlabel(x_l)
+            ax.set_xlabel(self.x_label_from_file.replace('_', '') + '\n' + x_l)
             ax.set_xticks(self.ind + self.width / 2)
             for tick in ax.get_xticklabels():
                 tick.set_rotation(90)
