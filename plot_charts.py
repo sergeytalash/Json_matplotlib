@@ -32,6 +32,7 @@ class CustomPlot:
         self.ax = []
         # TODO: Change 'documents_in_batch' to 'labels' (Used for x ticks)
         self.x_label_from_file = 'documents_in_batch'
+        self.path = '.'
         self.all_metrics = [
             'avg_DocPerSecond',
             'perc90_DocPerSecond',
@@ -40,31 +41,39 @@ class CustomPlot:
             'responseTime_perc90',
             'responseTime_avg'
         ]
-        if len(self.all_metrics) < 2:
+        if len(self.all_metrics) < 3:
             self.text_rotation = 0
         else:
             self.text_rotation = 90
+
         # Change width regarding to number of metrics and make some space between data from different files(batches)
         self.width = 1 / (len(self.all_metrics) + 1)
+
         self.fig.suptitle('Main title')
         self.all_data = {}
         self.x_labels_from_meta = []
-        self.colors = ['#f39c12',
-                       '#27ae60',
-                       '#8e44ad',
-                       '#3498db',
-                       '#16a085',
-                       '#e74c3c',
-                       ]
+        self.colors = [
+                          '#f39c12',
+                          '#27ae60',
+                          '#8e44ad',
+                          '#3498db',
+                          '#16a085',
+                          '#e74c3c',
+                      ] + self.generate_color()
+        print(len(self.generate_color()))
         # self.colors = self.generate_color()[4::]
         self.data_of_metrics = {k: [] for k in self.all_metrics}
+
+        # If the metric value do not exceed 10% of the maximum bar, then do not plot
+        self.percent_plot = 0.1
+
         self.bars = []
         self.plots = []
         self.max_metrics = {}
         self.run()
 
     def run(self):
-        self.json_files = [name for name in os.listdir() if name.endswith('.json')]
+        self.json_files = [name for name in os.listdir(self.path) if name.endswith('.json')]
         self.ind = np.arange(len(self.json_files))
         self.data = [self.get_data_from_json(file) for file in self.json_files]
         self.x_labels_from_meta = [lab for lab in [index['meta_data'][self.x_label_from_file] for index in self.data]]
@@ -80,8 +89,9 @@ class CustomPlot:
 
     @staticmethod
     def generate_color():
-        color_vars = ['00', 'C8', 'FF']
-        return ['#' + ''.join(i) for i in list(product(color_vars, repeat=3))]
+        color_vars = ['FF', 'C8', '00']
+        # color_vars = ['1', '5', '8', 'a', 'd', 'e']
+        return ['#' + ''.join(i) for i in list(product(color_vars, repeat=len(color_vars)))]
 
     @staticmethod
     def sort(data, keys):
@@ -112,12 +122,16 @@ class CustomPlot:
         for ax, x_l in zip(self.ax, self.x_labels):
             ax.set(ylim=[0, self.max_metrics[x_l] * 1.3])
             ax.set_ylabel(self.y_labels)
-        self.ax[1].legend([bar[0] for bar in self.bars], self.all_metrics, loc='upper center',
+        self.ax[1].legend([bar[0] for bar in self.bars], self.all_metrics,
+                          loc='upper center',
                           bbox_to_anchor=(0.5, 1.15),
                           ncol=len(self.all_metrics),
                           fancybox=True,
                           shadow=True
                           )
+        self.ax[1].text(-1, 0,
+                        str('text'),
+                        ha='center', va='bottom')
 
     @staticmethod
     def get_type_from_text(text):
@@ -160,8 +174,7 @@ class CustomPlot:
                     index_metric += 1
                 index_bars += 1
             for metric in self.all_metrics:
-                # If the metric value do not exceed 30% of the maximum bar, then do not plot
-                if max(y_dict[metric])[0] / self.max_metrics[test_name] > 0.3:
+                if max(y_dict[metric])[0] / self.max_metrics[test_name] > self.percent_plot:
                     plot = ax.plot(x_dict[metric], y_dict[metric])
                     self.plots.append(plot)
 
