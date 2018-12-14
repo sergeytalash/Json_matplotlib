@@ -1,2 +1,2 @@
 # Json_matplotlib
-Plot charts from json files
+Plot charts from existing metrics in json files
